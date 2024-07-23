@@ -1,0 +1,335 @@
+What is FastAPI?
+    FastAPI is a Python Web-Framework for building modern APIs
+        Fast (Performance)
+        Fast (Development)
+
+    Key Notes:
+        Few Bugs
+        Quick & Easy
+        Robust
+        Standards
+
+Python Virtual Environment
+    A virtual environment is a Python environment that is isolated from those in other Python environments.
+
+    FastAPI:- FastAPI needs the FastAPI Dependencies like uvicorn and couple of other Dependencies as our   application grows.
+
+    AI:- in this project might not need FastAPI or uvicorn or other Dependencies. In AI project might need a whole set of new Dependencies that we don't need to implement in FastAPI.
+
+    IOT:- It's a whole different thing from FastAPI and AI where this might need it's own Dependencies too.
+
+    Well a VE allows each one these projects to be siloed and completely independent from the other projects so our Dependencies don't have to mesh between them.
+
+    Also, imagine if we have two FastAPI projects, we may need different version of Dependencies between the projects depending on how they are running.
+
+
+
+How to install Dependencies
+    Pip is the Python package manager
+        Pip is used to install and update packages
+        You will want to make sure you have the latest version of pip installed
+        To check the pip version just write on the command terminal : python --version
+        cmd: pip list - to see everything that we have downloaded on our personal machine
+
+
+
+Creating Virtual Environment for FastAPI
+    cmd:
+        python -m venv (name)       [python -m venv fastapienv]
+        fastapienv\Scripts\activate
+        pip install fastapi
+        pip install "uvicorn[standard]"
+        To deactivate from venv : cmd : deactivate
+
+        Newest version to run FastAPI
+            Production Mode:- fastapi run mainfilename.py 
+            Development Mode:- fastapi dev mainfilename.py
+
+
+Path Parameters
+    Path Parameters are request parameters that have been attached to the URL
+    Path parameters are usually defined as a way to find information based o location
+    %20 = space
+
+
+Query Parameters
+    QPs are request parameters that have been attached after a "?"
+    QPs hav name=value pairs
+    Example: 127.0.0.1:8000/books/?category=math
+
+
+
+
+POST request method
+    Used to create data.
+    POST can have a body that has additional information that GET does not have.
+    Example of body: {"title": "Title One", "author": "Author One", "category": "Science"}.
+    BODY:
+        A POST request has an additional area to be able to send data called the BODY, and you can send data in the body that can now be used by fastapi. 
+        To be able to use a body of a request we need to import BODY from the FastAPI
+        Using Body, does not add any kind of Validation into our application
+
+
+
+
+PUT request method
+    Used to update data.
+    PUT can have a body that has additional information (like POST) that GET does not have.
+
+
+
+DELETE request method
+    Used to delete data
+
+
+
+Order matters in FastAPI, specially if you are goining to be using one file and it's in chronological order.
+So, alwayas make sure that the smaller API endpoints are always in the front of the file because if not, it could get consumed by a longer endpoint that takes in more variables
+
+
+
+Pydantics
+    Python library that is used for data modeling, data parsing and has efficient error handling.
+    Pydantics is commonly used as a resourse for data validation and how to handle data coming to our FastAPI application.
+
+    We will be implementing pydantics for data validation
+        Create a different request model for data validation
+        Field data validation on each variable / element
+
+        pydantic request data valdation looks like:
+            class BookRequest(BaseModel):
+                id: int
+                title: str = Field(min_length=3)
+                author: str = Field(min_length-1)
+                description: str = Field(min_length=1, max_length=100)
+                rating: int = Field(gt=0, lt=5)
+
+        Field:- It is a way for us to add data Validation on the request that's coming in where we can check the data of the title, author, description, and rating to see if these variables have the correct validation so we can use them within our fastApi application
+
+
+BaseModel
+    It is Pydantics model.
+    We inherit BaseModel, we get little more functionality for data vaildation.
+    We are going to be using for our model, which is the object coming in to be able to validate the variables within the object itself
+
+
+
+** Operator will pass the key/value from BookRequest() into Book() constructor
+
+Book(**book_request.dict()) = So we are going to change the BookRequest into a dictionary and assign each key/value into the correct constructor for the Book
+
+fastApi supports two versions of pydantic, V1 and V2, so if .dict() is getting any kind of error, so we need to change to .model_dump().
+
+
+Field is imported from pydantic to do valdation on model object
+    Field will allow us to be able to add validation to each field of that request object
+
+
+
+Import Path from fastApi to validate path parameters
+
+
+Status Code
+    An HTTP Status Code is used to help the client(the user or system submitting data to the server) to understand what happened on the server side application.
+
+    Status Codes are internationals Standardson how a Client/Server should handle the result of a request. 
+
+    It allows everyone who sends a request to know if their submission was successful or not.
+
+    Common Status Codes:
+
+        1xx -> information Response: Request Processing
+        2xx -> Success: Request successfully complete
+        3xx -> Redirection: Further action must be complete
+        4xx -> Client Errors: An error was caused by the client
+        5xx -> Server Errors: An error occured on the server
+    
+    2xx successful Status Codes:
+
+        200: OK :- 
+            Standard Response foe a successful Request. 
+            Commonly used for successful GET requests when data is being returned.
+        
+        201: Created :- 
+            The request has beesuccessful, creating a new resourse. Used when a POST creates an entity.
+
+        204: No Content :- 
+            The request has been successful, did not create an entity nor return anything. Commonly used with PUT requests.
+
+    4xx Client Errors Status Codes:
+
+        400: Bad Request :- 
+            Can not process request due to client error. Commonly used for invalid request methods.
+        
+        401: Unauthorized :-
+            Client does not have balid authentication for target resource.
+
+        404: Not Found :-
+            The clients requested resource can not be Found
+        
+        422: Unprocessable Entity :-\
+            Semantic Errors in Client Request
+
+    5xx Server Status Codes:
+
+        500: Internal Server Error :-
+            Generic Error Message, when an unexpected issue on the server happened.
+
+
+
+HTTP Exceptions
+Path validation
+Query Validation
+
+
+Explicit Status Code Response
+    We can dictate exactly what status Response is returned after each successful API endpoint
+
+
+
+SQL DATABASE:
+
+    DATABASE:
+        Organized collection of structured information of data, which is sotred in a computer system.
+        The data can be easily accessed.
+        The data can be modified.
+        The data can be controlled and organized.
+        Many databases use a structured query language(SQL) to modify and write data.
+
+        Data can be related to just about any object.
+        For example, a user on an application may have:
+            Name
+            Age
+            Email
+            Password
+        
+        A database is a collection of data.
+        Since data, on its own, is just data. A database allows management of this data.
+        Databases are organized in how data can be retrieved, stored and modified.
+        There are many types of Database Management Systems(DBMS)
+            SQLlite
+            MySQL
+            PostgreSQL
+    
+    SQL:
+        Standard language for dealing with Relational Databases.
+        SQL can be used to do different things with database records:
+            Create
+            Read
+            Update
+            Delete
+
+    SQLAlchemy:
+        It is an ORM(Object Relational Mapping), which is what our fastapi application is going to use to be
+        able to create a database and be able to create a connection to a database and being able to use all of the
+        database records within our application.
+
+        So, first we need to install SQLAlchemy
+            pip install sqlalchemy
+            
+
+SQLALCHEMY_DATABSE_URL = 'sqlite:///./todos.db'
+
+Now, this URL is going to be used to be able to create a location of this database on our fastapi application
+
+
+engine = create_engine(SQLALCHEMY_DATABSE_URL, connect_args={'check_same_thread': False})
+
+A database engine is something that we can use to be able to open up a connection and be able to use our database
+The connect_args are arguments that we can pass into our create engine , which will allow au to be able to define some kind of connection to a database.
+By default, SQLite will only allow one thread to communicate with it.
+Assuming that each thread will handle an independent request.
+This is to prevent any kind of accident sharing of the same connection for different kind of requests.
+But in fastapi it's very normal to have more than one thread that could interact with the database at the same time.
+So, we just need to make sure SQLite knows that hey, we don't want to be checking the same thread all the time because there could be multiple threads happening to our SQLite database
+
+
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Session Loacl: Each instance of the session local will have a database session.
+The class itself is not a database session yet we will add that later on.
+right now we just need to be able to create an instance of session local that will be able to become an actual database in the future 
+
+We want to bind to the engine that we just created and we want to make sure that our auto commits and auto flush are false OR the database transactions are going to try and do something automatically.
+We want to be fully control of everything our database will do in the future
+
+
+Creating a database object, which will be able to interact with the tables that we create in the future
+Base = declarative_base()
+
+
+Model:
+    Model is a way for SQLAlchemy to be able to understand what kind of database tables we are going to be creating within our database in the future.
+    A database model is going to be the actual record that is inside a database table.
+
+
+
+
+models.Base.metadata.create_all(bind=engine)
+This will create everything from our dayabase.py file and our models.py file to be able to create a new database that has a new table of Todos with all of the columns that we laid out in our models.py file.
+
+
+
+SQL Queries Introduction:
+    INSERTING database table (TODOS)
+        INSERT INTO todos (title, description, priority, complete)
+        VALUES ('Go to store', 'To pickup eggs', 4, False);
+    
+    SELECT:-
+        SELECT * FROM todos;
+        (*:- select all columns and rows)
+
+        SELECT title FROM todos;
+
+        SELECT description FROM todos;
+
+        SELECT title, description FROM todos;
+
+        SELECT title, description, priority FROM todos;
+
+    WHERE:-
+        SELECT * FROM todos WHERE priority=5;
+        (select all rows and columns where priority=5)
+
+        SELECT * FROM todos WHERE title='Feed dog';
+
+        SELECT * FROM todos WHERE id=2;
+    
+    UPDATE:-
+        UPDATE todos SET complete=True WHERE id=5;
+        (update all rows & columns to now have complete=True where id=5)
+
+        UPDATE todos SET complete=True WHERE title='learn something';
+        (it can cause error because there could be multiple title with the same name. so its better to update with unique value, which is id)
+    
+    DELETE:-
+        DELETE FROM todos WHERE id=5;
+
+
+
+
+
+Manipulation SQLite3 database using terminal:
+
+    cmd:
+        sqlite3 todos.db
+        .schema
+        insert into todos (title, description, priority, complete) values ('Go to the store', 'Pick up eggs', 5, False);
+        select * from todos
+        .mode column
+        .mode markdown
+        .mode box
+        .mode table
+        insert into todos (title, description, priority, complete) values ('Test element', 'He is getting hungry', 5, False);
+        select * from todos;
+        +----+-----------------+-----------------------+----------+----------+
+        | id |      title      |      description      | priority | complete |
+        +----+-----------------+-----------------------+----------+----------+
+        | 1  | Go to the store | Pick up eggs          | 5        | 0        |
+        | 2  | Cut the lawn    | Grass is getting long | 3        | 0        |
+        | 3  | Feed the dog    | He is getting hungry  | 5        | 0        |
+        | 4  | Test element    | He is getting hungry  | 5        | 0        |
+        +----+-----------------+-----------------------+----------+----------+
+
+        delete from todos where id=4;
